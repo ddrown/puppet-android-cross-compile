@@ -10,4 +10,4 @@ put files being copied in: /var/lib/puppet/files/
 
 to apply: /var/lib/puppet/run
 
-to test: see https://github.com/ddrown/Dockerfiles/tree/master/puppet
+to test: see https://github.com/ddrown/Dockerfiles/tree/master/test-puppet
