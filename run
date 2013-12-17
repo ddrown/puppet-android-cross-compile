@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd /var/lib/puppet
+puppet apply --modulepath ./modules manifests/site.pp
