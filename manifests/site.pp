@@ -36,6 +36,20 @@ node default {
       url => "https://github.com/ddrown/android-ports-tools.git",
       require => File["/home/admin/droid"];
   }
-# TODO Put the Android NDK under ~/droid/android-ndk
+
+  $ndk_version = "r9c"
+  exec {
+    "download-android-ndk":
+      command => "/usr/bin/env http_proxy=http://sandfish.lan:3128 wget http://dl.google.com/android/ndk/android-ndk-$ndk_version-linux-x86_64.tar.bz2",
+      cwd => "/home/admin/droid",
+      creates => "/home/admin/droid/android-ndk-$ndk_version-linux-x86_64.tar.bz2",
+      require => File["/home/admin/droid"];
+    "extract-android-ndk":
+      command => "/usr/bin/tar jxf /home/admin/droid/android-ndk-$ndk_verison.tar.bz2",
+      cwd => "/home/admin/droid",
+      creates => "/home/admin/droid/android-ndk-$ndk_version",
+      require => Exec["download-android-ndk"];
+  }
+# TODO ndk symlink
 # TODO put ~/droid/bin/ into your path
 }
