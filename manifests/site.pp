@@ -47,7 +47,7 @@ node default {
       creates => "/home/admin/droid/android-ndk-$ndk_version-linux-x86_64.tar.bz2",
       require => File["/home/admin/droid"];
     "extract-android-ndk":
-      command => "/usr/bin/tar jxf /home/admin/droid/android-ndk-$ndk_verison.tar.bz2",
+      command => "/bin/tar jxf /home/admin/droid/android-ndk-$ndk_version-linux-x86_64.tar.bz2",
       cwd => "/home/admin/droid",
       creates => "/home/admin/droid/android-ndk-$ndk_version",
       require => Exec["download-android-ndk"];
