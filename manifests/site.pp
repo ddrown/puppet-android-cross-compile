@@ -10,7 +10,7 @@ define puppetfile($mode = 0644, $owner = "root", $group = "root") {
 
 define gitrepo($url) {
   exec {
-    "/usr/bin/git checkout $url $title":
+    "/usr/bin/git clone $url $title":
       creates => $title,
       require => Package["git"];
   }
