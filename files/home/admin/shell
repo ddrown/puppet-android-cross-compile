@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec env HOME=/home/admin PATH=$PATH:/home/admin/droid/bin bash

@@ -68,5 +68,8 @@ node default {
       ensure => "../android-ndk/sources/cxx-stl/gnu-libstdc++/$gcc_version/",
       require => [File["/home/admin/droid/android-ndk/default-toolchain"],File["/home/admin/droid/lib"]];
   }
-# TODO put ~/droid/bin/ into your path
+  puppetfile {
+    "/home/admin/shell":
+      mode => 0755;
+  }
 }
