@@ -74,7 +74,6 @@ class admin_user {
     "/home/admin": ensure => directory, require => User["admin"], owner => "admin";
     "/home/admin/droid": ensure => directory, require => File["/home/admin"];
     "/home/admin/droid/lib": ensure => directory, require => File["/home/admin/droid"];
-    "/home/admin/droid/include": ensure => directory, require => File["/home/admin/droid"];
     "/home/admin/tmp": ensure => directory, require => File["/home/admin"];
   }
   puppetfile {
@@ -91,12 +90,16 @@ node default {
     "automake": ensure => present;
     "mercurial": ensure => present;
   }
-  gitrepo {
-    "/home/admin/droid/bin":
-      url => "https://github.com/ddrown/android-ports-tools.git",
-      require => File["/home/admin/droid"];
-  }
 
   include admin_user
   include android_ndk
+
+  gitrepo {
+    "/home/admin/droid/bin":
+      url => "https://github.com/ddrown/android-ports-tools.git",
+      require => Class["admin_user"];
+    "/home/admin/droid/include":
+      url => "https://github.com/ddrown/android-include.git",
+      require => Class["admin_user"];
+  }
 }
