@@ -25,10 +25,11 @@ node default {
     "admin": ensure => present;
   }
   file {
-    "/home/admin/droid": ensure => directory, require => User["admin"];
+    "/home/admin": ensure => directory, require => User["admin"], owner => "admin";
+    "/home/admin/droid": ensure => directory, require => File["/home/admin"];
     "/home/admin/droid/lib": ensure => directory, require => File["/home/admin/droid"];
     "/home/admin/droid/include": ensure => directory, require => File["/home/admin/droid"];
-    "/home/admin/tmp": ensure => directory, require => User["admin"];
+    "/home/admin/tmp": ensure => directory, require => File["/home/admin"];
   }
   gitrepo {
     "/home/admin/droid/bin":
