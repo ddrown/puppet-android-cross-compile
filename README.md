@@ -1,4 +1,4 @@
-Puppet template
+Android Cross Compile environment
 
 setup: put these files in /var/lib/puppet
 
@@ -10,4 +10,4 @@ put files being copied in: /var/lib/puppet/files/
 
 to apply: /var/lib/puppet/run
 
-to test: see https://github.com/ddrown/Dockerfiles/tree/master/test-puppet
+to test: see https://github.com/ddrown/Dockerfiles/tree/master/android-cross-compile
