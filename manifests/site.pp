@@ -40,7 +40,9 @@ node default {
   $ndk_version = "r9c"
   exec {
     "download-android-ndk":
-      command => "/usr/bin/env http_proxy=http://sandfish.lan:3128 wget http://dl.google.com/android/ndk/android-ndk-$ndk_version-linux-x86_64.tar.bz2",
+# TODO url
+#http://dl.google.com/android/ndk/android-ndk-$ndk_version-linux-x86_64.tar.bz2",
+      command => "/usr/bin/wget http://sandfish.lan/abob/android/android-ndk-$ndk_version-linux-x86_64.tar.bz2",
       cwd => "/home/admin/droid",
       creates => "/home/admin/droid/android-ndk-$ndk_version-linux-x86_64.tar.bz2",
       require => File["/home/admin/droid"];
