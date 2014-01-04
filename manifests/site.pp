@@ -8,11 +8,11 @@ define puppetfile($mode = 0644, $owner = "root", $group = "root") {
   }
 }
 
-define gitrepo($url,$directory) {
+define gitrepo($url) {
   exec {
-    "/usr/bin/git checkout $url $directory":
-      creates => $directory,
-      requires => Package["git"];
+    "/usr/bin/git checkout $url $title":
+      creates => $title,
+      require => Package["git"];
   }
 }
 
@@ -31,9 +31,9 @@ node default {
     "/home/admin/tmp": ensure => directory, require => User["admin"];
   }
   gitrepo {
-    url => "https://github.com/ddrown/android-ports-tools.git",
-    directory => "/home/admin/droid/bin",
-    require => File["/home/admin/droid"];
+    "/home/admin/droid/bin":
+      url => "https://github.com/ddrown/android-ports-tools.git",
+      require => File["/home/admin/droid"];
   }
 # TODO Put the Android NDK under ~/droid/android-ndk
 # TODO put ~/droid/bin/ into your path
