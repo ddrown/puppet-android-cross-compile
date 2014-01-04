@@ -1,6 +1,6 @@
 define puppetfile($mode = 0644, $owner = "root", $group = "root") {
   file {
-    $title: 
+    $title:
       source => "/var/lib/puppet/files/$title",
       mode => $mode,
       owner => $owner,
@@ -37,11 +37,13 @@ node default {
       require => File["/home/admin/droid"];
   }
 
+  # settings - NDK version and gcc version
   $ndk_version = "r9c"
+  $gcc_version = "4.6"
+
   exec {
     "download-android-ndk":
-# TODO url
-#http://dl.google.com/android/ndk/android-ndk-$ndk_version-linux-x86_64.tar.bz2",
+# TODO url = http://dl.google.com/android/ndk/android-ndk-$ndk_version-linux-x86_64.tar.bz2",
       command => "/usr/bin/wget http://sandfish.lan/abob/android/android-ndk-$ndk_version-linux-x86_64.tar.bz2",
       cwd => "/home/admin/droid",
       creates => "/home/admin/droid/android-ndk-$ndk_version-linux-x86_64.tar.bz2",
@@ -52,6 +54,19 @@ node default {
       creates => "/home/admin/droid/android-ndk-$ndk_version",
       require => Exec["download-android-ndk"];
   }
-# TODO ndk symlink
+  file {
+    "/home/admin/droid/android-ndk":
+      ensure => "/home/admin/droid/android-ndk-$ndk_version",
+      require => Exec["extract-android-ndk"];
+    "/home/admin/droid/android-ndk/default-toolchain":
+      ensure => "toolchains/arm-linux-androideabi-$gcc_version/prebuilt/linux-x86_64/",
+      require => File["/home/admin/droid/android-ndk"];
+    "/home/admin/droid/lib/libgcc.a":
+      ensure => "../android-ndk/default-toolchain/lib/gcc/arm-linux-androideabi/$gcc_version/libgcc.a",
+      require => [File["/home/admin/droid/android-ndk/default-toolchain"],File["/home/admin/droid/lib"]];
+    "/home/admin/droid/lib/libstdc++":
+      ensure => "../android-ndk/sources/cxx-stl/gnu-libstdc++/$gcc_version/",
+      require => [File["/home/admin/droid/android-ndk/default-toolchain"],File["/home/admin/droid/lib"]];
+  }
 # TODO put ~/droid/bin/ into your path
 }
