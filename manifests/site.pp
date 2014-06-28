@@ -96,7 +96,7 @@ class admin_user {
 node default {
   package {
     "vim-enhanced": ensure => present;
-    "vi": ensure => present;
+    "vim-minimal": ensure => present;
     "git": ensure => present;
     "git-svn": ensure => present;
     "man": ensure => present;
