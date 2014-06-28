@@ -51,7 +51,7 @@ class android_ndk_symlinks($gcc_version) {
 
 class android_ndk {
   # settings - NDK version and gcc version
-  $ndk_version = "r9c"
+  $ndk_version = "r9d"
   $gcc_version = "4.6"
 
   class {
@@ -85,6 +85,8 @@ node default {
   package {
     "vim-enhanced": ensure => present;
     "git": ensure => present;
+    "git-svn": ensure => present;
+    "man": ensure => present;
     "autoconf": ensure => present;
     "automake": ensure => present;
     "mercurial": ensure => present;
