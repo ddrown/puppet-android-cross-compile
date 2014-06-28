@@ -37,15 +37,26 @@ class android_ndk_install($ndk_version) {
 
 class android_ndk_symlinks($gcc_version) {
   file {
-    "/home/admin/droid/android-ndk/default-toolchain":
+    "/home/admin/droid/android-ndk/default-arm-toolchain":
       ensure => "toolchains/arm-linux-androideabi-$gcc_version/prebuilt/linux-x86_64/",
       require => File["/home/admin/droid/android-ndk"];
-    "/home/admin/droid/lib/libgcc.a":
-      ensure => "../android-ndk/default-toolchain/lib/gcc/arm-linux-androideabi/$gcc_version/libgcc.a",
-      require => File["/home/admin/droid/android-ndk/default-toolchain"];
-    "/home/admin/droid/lib/libstdc++":
+    "/home/admin/droid/lib-arm/libgcc.a":
+      ensure => "../android-ndk/default-arm-toolchain/lib/gcc/arm-linux-androideabi/$gcc_version/libgcc.a",
+      require => File["/home/admin/droid/android-ndk/default-arm-toolchain"];
+    "/home/admin/droid/lib-arm/libstdc++":
       ensure => "../android-ndk/sources/cxx-stl/gnu-libstdc++/$gcc_version/",
-      require => File["/home/admin/droid/android-ndk/default-toolchain"];
+      require => File["/home/admin/droid/android-ndk/default-arm-toolchain"];
+
+
+    "/home/admin/droid/android-ndk/default-x86-toolchain":
+      ensure => "toolchains/x86-$gcc_version/prebuilt/linux-x86_64/",
+      require => File["/home/admin/droid/android-ndk"];
+    "/home/admin/droid/lib-x86/libgcc.a":
+      ensure => "../android-ndk/default-x86-toolchain/lib/gcc/i686-linux-android/$gcc_version/libgcc.a",
+      require => File["/home/admin/droid/android-ndk/default-x86-toolchain"];
+    "/home/admin/droid/lib-x86/libstdc++":
+      ensure => "../android-ndk/sources/cxx-stl/gnu-libstdc++/$gcc_version/",
+      require => File["/home/admin/droid/android-ndk/default-x86-toolchain"];
   }
 }
 
@@ -72,7 +83,8 @@ class admin_user {
   file {
     "/home/admin": ensure => directory, require => User["admin"], owner => "admin";
     "/home/admin/droid": ensure => directory, require => File["/home/admin"];
-    "/home/admin/droid/lib": ensure => directory, require => File["/home/admin/droid"];
+    "/home/admin/droid/lib-arm": ensure => directory, require => File["/home/admin/droid"];
+    "/home/admin/droid/lib-x86": ensure => directory, require => File["/home/admin/droid"];
     "/home/admin/tmp": ensure => directory, require => File["/home/admin"];
   }
   puppetfile {
@@ -84,6 +96,7 @@ class admin_user {
 node default {
   package {
     "vim-enhanced": ensure => present;
+    "vi": ensure => present;
     "git": ensure => present;
     "git-svn": ensure => present;
     "man": ensure => present;
