@@ -97,12 +97,16 @@ node default {
   package {
     "vim-enhanced": ensure => present;
     "vim-minimal": ensure => present;
+    "gcc": ensure => present;
+    "patch": ensure => present;
+    "lftp": ensure => present;
     "git": ensure => present;
     "git-svn": ensure => present;
     "man": ensure => present;
     "autoconf": ensure => present;
     "automake": ensure => present;
     "mercurial": ensure => present;
+    "file": ensure => present;
   }
 
   include admin_user
