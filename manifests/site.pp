@@ -57,6 +57,17 @@ class android_ndk_symlinks($gcc_version) {
     "/home/admin/droid/lib-x86/libstdc++":
       ensure => "../android-ndk/sources/cxx-stl/gnu-libstdc++/$gcc_version/",
       require => File["/home/admin/droid/android-ndk/default-x86-toolchain"];
+
+
+    "/home/admin/droid/android-ndk/default-mips-toolchain":
+      ensure => "toolchains/mipsel-linux-android-$gcc_version/prebuilt/linux-x86_64/",
+      require => File["/home/admin/droid/android-ndk"];
+    "/home/admin/droid/lib-mips/libgcc.a":
+      ensure => "../android-ndk/default-mips-toolchain/lib/gcc/mipsel-linux-android/$gcc_version/libgcc.a",
+      require => File["/home/admin/droid/android-ndk/default-mips-toolchain"];
+    "/home/admin/droid/lib-mips/libstdc++":
+      ensure => "../android-ndk/sources/cxx-stl/gnu-libstdc++/$gcc_version/",
+      require => File["/home/admin/droid/android-ndk/default-mips-toolchain"];
   }
 }
 
@@ -85,6 +96,7 @@ class admin_user {
     "/home/admin/droid": ensure => directory, require => File["/home/admin"];
     "/home/admin/droid/lib-arm": ensure => directory, require => File["/home/admin/droid"];
     "/home/admin/droid/lib-x86": ensure => directory, require => File["/home/admin/droid"];
+    "/home/admin/droid/lib-mips": ensure => directory, require => File["/home/admin/droid"];
     "/home/admin/tmp": ensure => directory, require => File["/home/admin"];
   }
   puppetfile {
