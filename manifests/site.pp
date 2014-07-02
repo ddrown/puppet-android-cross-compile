@@ -47,7 +47,6 @@ class android_ndk_symlinks($gcc_version) {
       ensure => "../android-ndk/sources/cxx-stl/gnu-libstdc++/$gcc_version/",
       require => File["/home/admin/droid/android-ndk/default-arm-toolchain"];
 
-
     "/home/admin/droid/android-ndk/default-x86-toolchain":
       ensure => "toolchains/x86-$gcc_version/prebuilt/linux-x86_64/",
       require => File["/home/admin/droid/android-ndk"];
